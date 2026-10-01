@@ -71,5 +71,5 @@ L'historique des personnages créés et les champs remplis sont conservés même
 ## 🛠 Technologies utilisées
 
 - Java 17, Spring Boot (Web, Data JPA)
-- Base de données H2 (mode fichier)
+- Base de données H2 (mode fichier que j'ai choisi car j'ai eu un petit problème avec mon ordinateur donc c'était h2 ou rien)
 - HTML / CSS / JavaScript (vanilla, sans framework) pour l'interface
