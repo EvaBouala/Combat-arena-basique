@@ -1,0 +1,277 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+    --bg: #0d0b1e;
+    --panel: #1a1430;
+    --panel2: #241a42;
+    --border: #ffdd55;
+    --border-dark: #4a3a7a;
+    --text: #f5f0ff;
+    --muted: #9b8fc4;
+    --accent: #ff4f6e;
+    --accent2: #3fc9ff;
+    --ok: #5bffa0;
+    --err: #ff4f6e;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+* { box-sizing: inherit; image-rendering: pixelated; }
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+body {
+    margin: 0;
+    min-height: 100%;
+    color: var(--text);
+    font-family: "Press Start 2P", ui-monospace, monospace;
+    background:
+            repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 3px),
+            radial-gradient(circle at 50% 0%, #2a1f4d 0%, var(--bg) 70%);
+    font-size: 11px;
+    line-height: 1.6;
+}
+header {
+    padding: 28px 16px 10px;
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+}
+header h1 {
+    font-size: 18px;
+    margin: 0 0 10px;
+    color: var(--border);
+    text-shadow: 3px 3px 0 var(--accent2), 3px 3px 0 1px #000;
+    letter-spacing: 1px;
+}
+header p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 9px;
+}
+.base-url {
+    max-width: 760px;
+    margin: 18px auto 0;
+    padding: 0 16px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.base-url label {
+    font-size: 9px;
+    color: var(--muted);
+    white-space: nowrap;
+}
+.base-url input {
+    flex: 1;
+    min-width: 180px;
+}
+main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+.card {
+    background: var(--panel);
+    border: 3px solid var(--border-dark);
+    box-shadow: 0 0 0 3px #000, 6px 6px 0 #000;
+    padding: 0;
+    overflow: hidden;
+}
+.card summary {
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 12px;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--panel2);
+    border-bottom: 3px solid var(--border-dark);
+    color: var(--border);
+}
+.card summary::-webkit-details-marker { display: none; }
+.card summary::after {
+    content: "▶";
+    color: var(--accent2);
+    font-size: 10px;
+}
+.card[open] summary::after { content: "▼"; }
+.card .body {
+    padding: 16px;
+}
+.hp-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    font-size: 9px;
+    color: var(--muted);
+}
+.hp-bar {
+    flex: 1;
+    height: 14px;
+    background: #000;
+    border: 2px solid var(--border-dark);
+    position: relative;
+    overflow: hidden;
+}
+.hp-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--ok);
+    transition: width 0.25s steps(10);
+}
+.hp-fill.mid { background: #ffd34f; }
+.hp-fill.low { background: var(--err); }
+.section-label {
+    color: var(--accent2);
+    font-size: 9px;
+    margin: 16px 0 8px;
+    letter-spacing: 1px;
+}
+.section-label:first-child { margin-top: 0; }
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field.checkbox { flex-direction: row; align-items: center; gap: 8px; grid-column: span 2; }
+label { font-size: 8px; color: var(--muted); text-transform: uppercase; }
+input[type="text"], input[type="number"] {
+    background: #000;
+    border: 2px solid var(--border-dark);
+    padding: 8px 8px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 10px;
+    width: 100%;
+}
+input[type="text"]:focus, input[type="number"]:focus {
+    outline: none;
+    border-color: var(--accent2);
+}
+input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent); }
+.actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+}
+button {
+    background: var(--accent);
+    color: #1a0010;
+    border: 2px solid #000;
+    box-shadow: 3px 3px 0 #000;
+    padding: 10px 14px;
+    font-family: inherit;
+    font-size: 9px;
+    cursor: pointer;
+    transition: transform 0.05s;
+}
+button:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 #000;
+}
+button.secondary {
+    background: var(--accent2);
+    color: #001824;
+}
+button.danger {
+    background: #ff2d4e;
+    color: #fff0f0;
+}
+.id-line {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+.id-line .field { flex: 0 0 90px; }
+pre {
+    margin-top: 14px;
+    background: #000;
+    border: 2px dashed var(--border-dark);
+    padding: 10px;
+    font-size: 9px;
+    font-family: "Press Start 2P", monospace;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: var(--muted);
+    max-height: 160px;
+    overflow: auto;
+}
+pre.ok { color: var(--ok); border-color: var(--ok); }
+pre.err { color: var(--err); border-color: var(--err); }
+
+#combat_result {
+    max-height: 320px;
+    font-family: "Press Start 2P", monospace;
+}
+
+.muted {
+    color: var(--muted);
+    font-size: 9px;
+}
+
+#historyList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 260px;
+    overflow: auto;
+}
+
+.history-item {
+    background: #000;
+    border: 2px dashed var(--border-dark);
+    padding: 8px 10px;
+    font-size: 9px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    word-break: break-word;
+}
+
+.history-date {
+    color: var(--muted);
+    font-size: 8px;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    z-index: 100;
+}
+
+.modal-overlay.hidden {
+    display: none;
+}
+
+.modal-box {
+    background: var(--panel);
+    border: 3px solid var(--border);
+    box-shadow: 0 0 0 3px #000, 6px 6px 0 #000;
+    padding: 20px;
+    max-width: 360px;
+    text-align: center;
+}
+
+.modal-box p {
+    font-size: 10px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.modal-box .actions {
+    justify-content: center;
+}

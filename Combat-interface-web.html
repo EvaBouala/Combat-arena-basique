@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Combat Leo & Julien</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>⚔ COMBAT ARENA ⚔</h1>
+  <p>Choisis un combattant, agis, encaisse les coups.</p>
+</header>
+
+<div class="base-url">
+  <label for="baseUrl">Serveur</label>
+  <input type="text" id="baseUrl" value="http://localhost:8081">
+</div>
+
+<main>
+
+  <details class="card">
+    <summary>🗡️ JULIEN</summary>
+    <div class="body">
+
+      <div class="hp-row">
+        <span>PV</span>
+        <div class="hp-bar"><div class="hp-fill" id="julien_hpfill"></div></div>
+        <span id="julien_hptext">--</span>
+      </div>
+
+      <div class="section-label">// Créer</div>
+      <div class="row">
+        <div class="field"><label for="create_julien_taille">taille</label><input type="number" step="0.1" id="create_julien_taille" onchange="saveField(this.id)"></div>
+        <div class="field checkbox"><input type="checkbox" id="create_julien_swag" onchange="saveField(this.id)"><label for="create_julien_swag">swag</label></div>
+        <div class="field"><label for="create_julien_action">action</label><input type="text" id="create_julien_action" onchange="saveField(this.id)"></div>
+        <div class="field"><label for="create_julien_pv">pv</label><input type="number" id="create_julien_pv" onchange="saveField(this.id)"></div>
+      </div>
+      <div class="actions">
+        <button onclick="createJulien()">Créer</button>
+      </div>
+
+      <div class="section-label">// Voir / Modifier</div>
+      <div class="id-line">
+        <div class="field"><label>id</label><input type="number" id="julien_id" onchange="saveField(this.id)"></div>
+        <button class="secondary" onclick="getJulien()">Voir</button>
+      </div>
+      <div class="row">
+        <div class="field"><label for="update_julien_taille">taille</label><input type="number" step="0.1" id="update_julien_taille" onchange="saveField(this.id)"></div>
+        <div class="field checkbox"><input type="checkbox" id="update_julien_swag" onchange="saveField(this.id)"><label for="update_julien_swag">swag</label></div>
+        <div class="field"><label for="update_julien_action">action</label><input type="text" id="update_julien_action" onchange="saveField(this.id)"></div>
+        <div class="field"><label for="update_julien_pv">pv</label><input type="number" id="update_julien_pv" onchange="saveField(this.id)"></div>
+      </div>
+      <div class="actions">
+        <button onclick="updateJulien()">Modifier</button>
+      </div>
+
+      <div class="section-label">// Encaisser un coup</div>
+      <div class="actions">
+        <button onclick="degatsJulien()">⚡ Appliquer les dégâts</button>
+        <button class="secondary" onclick="resetJulien()">🔄 Réinitialiser</button>
+      </div>
+
+      <pre id="julien_result">En attente...</pre>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary>😎 LEO</summary>
+    <div class="body">
+
+      <div class="hp-row">
+        <span>PV</span>
+        <div class="hp-bar"><div class="hp-fill" id="leo_hpfill"></div></div>
+        <span id="leo_hptext">--</span>
+      </div>
+
+      <div class="section-label">// Créer</div>
+      <div class="row">
+        <div class="field"><label for="create_leo_taille">taille</label><input type="number" step="0.1" id="create_leo_taille" onchange="saveField(this.id)"></div>
+        <div class="field checkbox"><input type="checkbox" id="create_leo_swag" onchange="saveField(this.id)"><label for="create_leo_swag">swag</label></div>
+        <div class="field checkbox"><input type="checkbox" id="create_leo_beau" onchange="saveField(this.id)"><label for="create_leo_beau">beau</label></div>
+        <div class="field"><label for="create_leo_phrase">phrase</label><input type="text" id="create_leo_phrase" onchange="saveField(this.id)"></div>
+        <div class="field"><label for="create_leo_action">action</label><input type="text" id="create_leo_action" onchange="saveField(this.id)"></div>
+        <div class="field"><label for="create_leo_pv">pv</label><input type="number" id="create_leo_pv" onchange="saveField(this.id)"></div>
+      </div>
+      <div class="actions">
+        <button onclick="createLeo()">Créer</button>
+      </div>
+
+      <div class="section-label">// Voir / Modifier</div>
+      <div class="id-line">
+        <div class="field"><label>id</label><input type="number" id="leo_id" onchange="saveField(this.id)"></div>
+        <button class="secondary" onclick="getLeo()">Voir</button>
+      </div>
+      <div class="row">
+        <div class="field"><label for="update_leo_taille">taille</label><input type="number" step="0.1" id="update_leo_taille" onchange="saveField(this.id)"></div>
+        <div class="field checkbox"><input type="checkbox" id="update_leo_swag" onchange="saveField(this.id)"><label for="update_leo_swag">swag</label></div>
+        <div class="field checkbox"><input type="checkbox" id="update_leo_beau" onchange="saveField(this.id)"><label for="update_leo_beau">beau</label></div>
+        <div class="field"><label for="update_leo_phrase">phrase</label><input type="text" id="update_leo_phrase" onchange="saveField(this.id)"></div>
+        <div class="field"><label for="update_leo_action">action</label><input type="text" id="update_leo_action" onchange="saveField(this.id)"></div>
+        <div class="field"><label for="update_leo_pv">pv</label><input type="number" id="update_leo_pv" onchange="saveField(this.id)"></div>
+      </div>
+      <div class="actions">
+        <button onclick="updateLeo()">Modifier</button>
+      </div>
+
+      <div class="section-label">// Encaisser un coup</div>
+      <div class="actions">
+        <button onclick="degatsLeo()">⚡ Appliquer les dégâts</button>
+        <button class="secondary" onclick="resetLeo()">🔄 Réinitialiser</button>
+      </div>
+
+      <pre id="leo_result">En attente...</pre>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary>🥊 CHALLENGER</summary>
+    <div class="body">
+
+      <div class="hp-row">
+        <span>PV</span>
+        <div class="hp-bar"><div class="hp-fill" id="challenger_hpfill"></div></div>
+        <span id="challenger_hptext">--</span>
+      </div>
+
+      <div class="section-label">// Créer</div>
+      <div class="row">
+        <div class="field"><label for="create_challenger_nom">nom</label><input type="text" id="create_challenger_nom" onchange="saveField(this.id)"></div>
+        <div class="field"><label for="create_challenger_taille">taille</label><input type="number" step="0.1" id="create_challenger_taille" onchange="saveField(this.id)"></div>
+        <div class="field checkbox"><input type="checkbox" id="create_challenger_swag" onchange="saveField(this.id)"><label for="create_challenger_swag">swag</label></div>
+        <div class="field"><label for="create_challenger_action">action</label><input type="text" id="create_challenger_action" onchange="saveField(this.id)"></div>
+        <div class="field"><label for="create_challenger_pv">pv</label><input type="number" id="create_challenger_pv" onchange="saveField(this.id)"></div>
+      </div>
+      <div class="actions">
+        <button onclick="createChallenger()">Créer</button>
+      </div>
+
+      <div class="section-label">// Voir / Modifier</div>
+      <div class="id-line">
+        <div class="field"><label>id</label><input type="number" id="challenger_id" onchange="saveField(this.id)"></div>
+        <button class="secondary" onclick="getChallenger()">Voir</button>
+      </div>
+      <div class="row">
+        <div class="field"><label for="update_challenger_nom">nom</label><input type="text" id="update_challenger_nom" onchange="saveField(this.id)"></div>
+        <div class="field"><label for="update_challenger_taille">taille</label><input type="number" step="0.1" id="update_challenger_taille" onchange="saveField(this.id)"></div>
+        <div class="field checkbox"><input type="checkbox" id="update_challenger_swag" onchange="saveField(this.id)"><label for="update_challenger_swag">swag</label></div>
+        <div class="field"><label for="update_challenger_action">action</label><input type="text" id="update_challenger_action" onchange="saveField(this.id)"></div>
+        <div class="field"><label for="update_challenger_pv">pv</label><input type="number" id="update_challenger_pv" onchange="saveField(this.id)"></div>
+      </div>
+      <div class="actions">
+        <button onclick="updateChallenger()">Modifier</button>
+      </div>
+
+      <div class="section-label">// Encaisser un coup</div>
+      <div class="actions">
+        <button onclick="degatsChallenger()">⚡ Appliquer les dégâts</button>
+        <button class="secondary" onclick="resetChallenger()">🔄 Réinitialiser</button>
+      </div>
+
+      <pre id="challenger_result">En attente...</pre>
+    </div>
+  </details>
+
+</main>
+
+<main style="padding-top:0">
+  <details class="card" open>
+    <summary>⚔ LANCER UN COMBAT</summary>
+    <div class="body">
+      <div class="section-label">// Participants (coche 2 ou 3)</div>
+      <div class="row" style="grid-template-columns:1fr">
+        <div class="field checkbox">
+          <input type="checkbox" id="combat_julien_check" onchange="saveField(this.id)">
+          <label for="combat_julien_check">🗡️ Julien — id :</label>
+          <input type="number" id="combat_julien_id" style="width:70px;flex:none" onchange="saveField(this.id)">
+        </div>
+        <div class="field checkbox">
+          <input type="checkbox" id="combat_leo_check" onchange="saveField(this.id)">
+          <label for="combat_leo_check">😎 Leo — id :</label>
+          <input type="number" id="combat_leo_id" style="width:70px;flex:none" onchange="saveField(this.id)">
+        </div>
+        <div class="field checkbox">
+          <input type="checkbox" id="combat_challenger_check" onchange="saveField(this.id)">
+          <label for="combat_challenger_check">🥊 Challenger — id :</label>
+          <input type="number" id="combat_challenger_id" style="width:70px;flex:none" onchange="saveField(this.id)">
+        </div>
+      </div>
+      <div class="actions">
+        <button onclick="lancerCombat()">Combattre !</button>
+        <button class="secondary" onclick="resetCombat()">🔄 Réinitialiser le combat</button>
+      </div>
+      <pre id="combat_result">En attente...</pre>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary>📜 HISTORIQUE DES PERSONNAGES CRÉÉS</summary>
+    <div class="body">
+      <div id="historyList"></div>
+      <div class="actions">
+        <button class="danger" onclick="demanderEffacerHistorique()">🗑 Effacer l'historique</button>
+      </div>
+    </div>
+  </details>
+</main>
+
+<div id="confirmModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <p>Voulez-vous vraiment effacer tout l'historique ?</p>
+    <div class="actions">
+      <button onclick="confirmerEffacerHistorique(true)">Oui</button>
+      <button class="secondary" onclick="confirmerEffacerHistorique(false)">Non</button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  function getBaseUrl() {
+    return document.getElementById("baseUrl").value.replace(/\/$/, "");
+  }
+
+  function afficherResultat(key, ok, status, texte) {
+    const el = document.getElementById(key + "_result");
+    el.className = ok ? "ok" : "err";
+    el.textContent = status + "\n" + texte;
+  }
+
+  function majBarrePv(key, pv) {
+    const fill = document.getElementById(key + "_hpfill");
+    const texte = document.getElementById(key + "_hptext");
+    if (!fill) return;
+    const max = 20;
+    let pourcentage = (pv / max) * 100;
+    if (pourcentage < 0) pourcentage = 0;
+    if (pourcentage > 100) pourcentage = 100;
+    fill.style.width = pourcentage + "%";
+    if (pourcentage <= 25) {
+      fill.className = "hp-fill low";
+    } else if (pourcentage <= 60) {
+      fill.className = "hp-fill mid";
+    } else {
+      fill.className = "hp-fill";
+    }
+    texte.textContent = pv;
+  }
+
+  /* ---------- JULIEN ---------- */
+
+  async function createJulien() {
+    const taille = document.getElementById("create_julien_taille").value;
+    const swag = document.getElementById("create_julien_swag").checked;
+    const action = document.getElementById("create_julien_action").value;
+    const pv = document.getElementById("create_julien_pv").value;
+
+    const url = getBaseUrl() + "/Julien?taille=" + taille + "&swag=" + swag + "&action=" + encodeURIComponent(action) + "&pv=" + pv;
+
+    try {
+      const res = await fetch(url, { method: "POST" });
+      const texte = await res.text();
+      afficherResultat("julien", res.ok, res.status, texte);
+
+      if (res.ok) {
+        const data = JSON.parse(texte);
+        document.getElementById("julien_id").value = data.id;
+        document.getElementById("update_julien_taille").value = data.taille;
+        document.getElementById("update_julien_swag").checked = data.swag;
+        document.getElementById("update_julien_action").value = data.action;
+        document.getElementById("update_julien_pv").value = data.pv;
+        majBarrePv("julien", data.pv);
+        ajouterHistorique("Julien", data.id, "");
+      }
+    } catch (e) {
+      afficherResultat("julien", false, "", "Connexion impossible. Vérifie que le serveur tourne.\n" + e.message);
+    }
+  }
+
+  async function getJulien() {
+    const id = document.getElementById("julien_id").value;
+    const url = getBaseUrl() + "/Julien?id=" + id;
+
+    try {
+      const res = await fetch(url, { method: "GET" });
+      const texte = await res.text();
+      afficherResultat("julien", res.ok, res.status, texte);
+
+      if (res.ok) {
+        const data = JSON.parse(texte);
+        document.getElementById("update_julien_taille").value = data.taille;
+        document.getElementById("update_julien_swag").checked = data.swag;
+        document.getElementById("update_julien_action").value = data.action;
+        document.getElementById("update_julien_pv").value = data.pv;
+        majBarrePv("julien", data.pv);
+      }
+    } catch (e) {
+      afficherResultat("julien", false, "", "Connexion impossible. Vérifie que le serveur tourne.\n" + e.message);
+    }
+  }
+
+  async function updateJulien() {
+    const id = document.getElementById("julien_id").value;
+    const taille = document.getElementById("update_julien_taille").value;
+    const swag = document.getElementById("update_julien_swag").checked;
+    const action = document.getElementById("update_julien_action").value;
+    const pv = document.getElementById("update_julien_pv").value;
+
+    const url = getBaseUrl() + "/Julien?id=" + id + "&taille=" + taille + "&swag=" + swag + "&action=" + encodeURIComponent(action) + "&pv=" + pv;
+
+    try {
+      const res = await fetch(url, { method: "PUT" });
+      const texte = await res.text();
+      afficherResultat("julien", res.ok, res.status, texte);
+      if (res.ok) {
+        await getJulien();
+      }
+    } catch (e) {
+      afficherResultat("julien", false, "", "Connexion impossible. Vérifie que le serveur tourne.\n" + e.message);
+    }
+  }
+
+  async function degatsJulien() {
+    const id = document.getElementById("julien_id").value;
+    const url = getBaseUrl() + "/Julien/degats?id=" + id;
+
+    try {
+      const res = await fetch(url, { method: "PUT" });
+      const texte = await res.text();
+      afficherResultat("julien", res.ok, res.status, texte);
+      if (res.ok) {
+        await getJulien();
+      }
+    } catch (e) {
+      afficherResultat("julien", false, "", "Connexion impossible. Vérifie que le serveur tourne.\n" + e.message);
+    }
+  }
+
+  function resetJulien() {
+    const champs = [
+      "create_julien_taille", "create_julien_swag", "create_julien_action", "create_julien_pv",
+      "julien_id",
+      "update_julien_taille", "update_julien_swag", "update_julien_action", "update_julien_pv"
+    ];
+    champs.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (el.type === "checkbox") {
+        el.checked = false;
+      } else {
+        el.value = "";
+      }
+      localStorage.removeItem(id);
+    });
+
+    const fill = document.getElementById("julien_hpfill");
+    fill.style.width = "0%";
+    fill.className = "hp-fill";
+    document.getElementById("julien_hptext").textContent = "--";
+
+    const resultEl = document.getElementById("julien_result");
+    resultEl.className = "";
+    resultEl.textContent = "En attente...";
+  }
+
+  /* ---------- LEO ---------- */
+
+  async function createLeo() {
+    const taille = document.getElementById("create_leo_taille").value;
+    const swag = document.getElementById("create_leo_swag").checked;
+    const beau = document.getElementById("create_leo_beau").checked;
+    const phrase = document.getElementById("create_leo_phrase").value;
+    const action = document.getElementById("create_leo_action").value;
+    const pv = document.getElementById("create_leo_pv").value;
+
+    const url = getBaseUrl() + "/Leo?taille=" + taille + "&swag=" + swag + "&beau=" + beau +
+            "&phrase=" + encodeURIComponent(phrase) + "&action=" + encodeURIComponent(action) + "&pv=" + pv;
+
+    try {
+      const res = await fetch(url, { method: "POST" });
+      const texte = await res.text();
+      afficherResultat("leo", res.ok, res.status, texte);
+
+      if (res.ok) {
+        const data = JSON.parse(texte);
+        document.getElementById("leo_id").value = data.id;
+        document.getElementById("update_leo_taille").value = data.taille;
+        document.getElementById("update_leo_swag").checked = data.swag;
+        document.getElementById("update_leo_beau").checked = data.beau;
+        document.getElementById("update_leo_phrase").value = data.phrase;
+        document.getElementById("update_leo_action").value = data.action;
+        document.getElementById("update_leo_pv").value = data.pv;
+        majBarrePv("leo", data.pv);
+        ajouterHistorique("Leo", data.id, "");
+      }
+    } catch (e) {
+      afficherResultat("leo", false, "", "Connexion impossible. Vérifie que le serveur tourne.\n" + e.message);
+    }
+  }
+
+  async function getLeo() {
+    const id = document.getElementById("leo_id").value;
+    const url = getBaseUrl() + "/Leo?id=" + id;
+
+    try {
+      const res = await fetch(url, { method: "GET" });
+      const texte = await res.text();
+      afficherResultat("leo", res.ok, res.status, texte);
+
+      if (res.ok) {
+        const data = JSON.parse(texte);
+        document.getElementById("update_leo_taille").value = data.taille;
+        document.getElementById("update_leo_swag").checked = data.swag;
+        document.getElementById("update_leo_beau").checked = data.beau;
+        document.getElementById("update_leo_phrase").value = data.phrase;
+        document.getElementById("update_leo_action").value = data.action;
+        document.getElementById("update_leo_pv").value = data.pv;
+        majBarrePv("leo", data.pv);
+      }
+    } catch (e) {
+      afficherResultat("leo", false, "", "Connexion impossible. Vérifie que le serveur tourne.\n" + e.message);
+    }
+  }
+
+  async function updateLeo() {
+    const id = document.getElementById("leo_id").value;
+    const taille = document.getElementById("update_leo_taille").value;
+    const swag = document.getElementById("update_leo_swag").checked;
+    const beau = document.getElementById("update_leo_beau").checked;
+    const phrase = document.getElementById("update_leo_phrase").value;
+    const action = document.getElementById("update_leo_action").value;
+    const pv = document.getElementById("update_leo_pv").value;
+
+    const url = getBaseUrl() + "/Leo?id=" + id + "&taille=" + taille + "&swag=" + swag + "&beau=" + beau +
+            "&phrase=" + encodeURIComponent(phrase) + "&action=" + encodeURIComponent(action) + "&pv=" + pv;
+
+    try {
+      const res = await fetch(url, { method: "PUT" });
+      const texte = await res.text();
+      afficherResultat("leo", res.ok, res.status, texte);
+      if (res.ok) {
+        await getLeo();
+      }
+    } catch (e) {
+      afficherResultat("leo", false, "", "Connexion impossible. Vérifie que le serveur tourne.\n" + e.message);
+    }
+  }
+
+  async function degatsLeo() {
+    const id = document.getElementById("leo_id").value;
+    const url = getBaseUrl() + "/Leo/degats?id=" + id;
+
+    try {
+      const res = await fetch(url, { method: "PUT" });
+      const texte = await res.text();
+      afficherResultat("leo", res.ok, res.status, texte);
+      if (res.ok) {
+        await getLeo();
+      }
+    } catch (e) {
+      afficherResultat("leo", false, "", "Connexion impossible. Vérifie que le serveur tourne.\n" + e.message);
+    }
+  }
+
+  function resetLeo() {
+    const champs = [
+      "create_leo_taille", "create_leo_swag", "create_leo_beau", "create_leo_phrase", "create_leo_action", "create_leo_pv",
+      "leo_id",
+      "update_leo_taille", "update_leo_swag", "update_leo_beau", "update_leo_phrase", "update_leo_action", "update_leo_pv"
+    ];
+    champs.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (el.type === "checkbox") {
+        el.checked = false;
+      } else {
+        el.value = "";
+      }
+      localStorage.removeItem(id);
+    });
+
+    const fill = document.getElementById("leo_hpfill");
+    fill.style.width = "0%";
+    fill.className = "hp-fill";
+    document.getElementById("leo_hptext").textContent = "--";
+
+    const resultEl = document.getElementById("leo_result");
+    resultEl.className = "";
+    resultEl.textContent = "En attente...";
+  }
+
+  /* ---------- CHALLENGER ---------- */
+
+  async function createChallenger() {
+    const nom = document.getElementById("create_challenger_nom").value;
+    const taille = document.getElementById("create_challenger_taille").value;
+    const swag = document.getElementById("create_challenger_swag").checked;
+    const action = document.getElementById("create_challenger_action").value;
+    const pv = document.getElementById("create_challenger_pv").value;
+
+    const url = getBaseUrl() + "/Challenger?nom=" + encodeURIComponent(nom) + "&taille=" + taille +
+            "&swag=" + swag + "&action=" + encodeURIComponent(action) + "&pv=" + pv;
+
+    try {
+      const res = await fetch(url, { method: "POST" });
+      const texte = await res.text();
+      afficherResultat("challenger", res.ok, res.status, texte);
+
+      if (res.ok) {
+        const data = JSON.parse(texte);
+        document.getElementById("challenger_id").value = data.id;
+        document.getElementById("update_challenger_nom").value = data.nom;
+        document.getElementById("update_challenger_taille").value = data.taille;
+        document.getElementById("update_challenger_swag").checked = data.swag;
+        document.getElementById("update_challenger_action").value = data.action;
+        document.getElementById("update_challenger_pv").value = data.pv;
+        majBarrePv("challenger", data.pv);
+        ajouterHistorique("Challenger", data.id, data.nom);
+      }
+    } catch (e) {
+      afficherResultat("challenger", false, "", "Connexion impossible. Vérifie que le serveur tourne.\n" + e.message);
+    }
+  }
+
+  async function getChallenger() {
+    const id = document.getElementById("challenger_id").value;
+    const url = getBaseUrl() + "/Challenger?id=" + id;
+
+    try {
+      const res = await fetch(url, { method: "GET" });
+      const texte = await res.text();
+      afficherResultat("challenger", res.ok, res.status, texte);
+
+      if (res.ok) {
+        const data = JSON.parse(texte);
+        document.getElementById("update_challenger_nom").value = data.nom;
+        document.getElementById("update_challenger_taille").value = data.taille;
+        document.getElementById("update_challenger_swag").checked = data.swag;
+        document.getElementById("update_challenger_action").value = data.action;
+        document.getElementById("update_challenger_pv").value = data.pv;
+        majBarrePv("challenger", data.pv);
+      }
+    } catch (e) {
+      afficherResultat("challenger", false, "", "Connexion impossible. Vérifie que le serveur tourne.\n" + e.message);
+    }
+  }
+
+  async function updateChallenger() {
+    const id = document.getElementById("challenger_id").value;
+    const nom = document.getElementById("update_challenger_nom").value;
+    const taille = document.getElementById("update_challenger_taille").value;
+    const swag = document.getElementById("update_challenger_swag").checked;
+    const action = document.getElementById("update_challenger_action").value;
+    const pv = document.getElementById("update_challenger_pv").value;
+
+    const url = getBaseUrl() + "/Challenger?id=" + id + "&nom=" + encodeURIComponent(nom) + "&taille=" + taille +
+            "&swag=" + swag + "&action=" + encodeURIComponent(action) + "&pv=" + pv;
+
+    try {
+      const res = await fetch(url, { method: "PUT" });
+      const texte = await res.text();
+      afficherResultat("challenger", res.ok, res.status, texte);
+      if (res.ok) {
+        await getChallenger();
+      }
+    } catch (e) {
+      afficherResultat("challenger", false, "", "Connexion impossible. Vérifie que le serveur tourne.\n" + e.message);
+    }
+  }
+
+  async function degatsChallenger() {
+    const id = document.getElementById("challenger_id").value;
+    const url = getBaseUrl() + "/Challenger/degats?id=" + id;
+
+    try {
+      const res = await fetch(url, { method: "PUT" });
+      const texte = await res.text();
+      afficherResultat("challenger", res.ok, res.status, texte);
+      if (res.ok) {
+        await getChallenger();
+      }
+    } catch (e) {
+      afficherResultat("challenger", false, "", "Connexion impossible. Vérifie que le serveur tourne.\n" + e.message);
+    }
+  }
+
+  function resetChallenger() {
+    const champs = [
+      "create_challenger_nom", "create_challenger_taille", "create_challenger_swag", "create_challenger_action", "create_challenger_pv",
+      "challenger_id",
+      "update_challenger_nom", "update_challenger_taille", "update_challenger_swag", "update_challenger_action", "update_challenger_pv"
+    ];
+    champs.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (el.type === "checkbox") {
+        el.checked = false;
+      } else {
+        el.value = "";
+      }
+      localStorage.removeItem(id);
+    });
+
+    const fill = document.getElementById("challenger_hpfill");
+    fill.style.width = "0%";
+    fill.className = "hp-fill";
+    document.getElementById("challenger_hptext").textContent = "--";
+
+    const resultEl = document.getElementById("challenger_result");
+    resultEl.className = "";
+    resultEl.textContent = "En attente...";
+  }
+
+  /* ---------- COMBAT ---------- */
+
+  async function lancerCombat() {
+    const participants = [];
+
+    const julienCoche = document.getElementById("combat_julien_check").checked;
+    const julienId = document.getElementById("combat_julien_id").value;
+    if (julienCoche && julienId) {
+      participants.push("Julien:" + julienId);
+    }
+
+    const leoCoche = document.getElementById("combat_leo_check").checked;
+    const leoId = document.getElementById("combat_leo_id").value;
+    if (leoCoche && leoId) {
+      participants.push("Leo:" + leoId);
+    }
+
+    const challengerCoche = document.getElementById("combat_challenger_check").checked;
+    const challengerId = document.getElementById("combat_challenger_id").value;
+    if (challengerCoche && challengerId) {
+      participants.push("Challenger:" + challengerId);
+    }
+
+    const resultEl = document.getElementById("combat_result");
+
+    if (participants.length < 2 || participants.length > 3) {
+      resultEl.className = "err";
+      resultEl.textContent = "Coche 2 ou 3 participants avec leur id avant de lancer le combat.";
+      return;
+    }
+
+    const url = getBaseUrl() + "/combat?participants=" + participants.join(",");
+
+    try {
+      const res = await fetch(url, { method: "POST" });
+      const texte = await res.text();
+      resultEl.className = res.ok ? "ok" : "err";
+      resultEl.textContent = texte;
+
+      if (julienCoche && julienId) {
+        document.getElementById("julien_id").value = julienId;
+        await getJulien();
+      }
+      if (leoCoche && leoId) {
+        document.getElementById("leo_id").value = leoId;
+        await getLeo();
+      }
+      if (challengerCoche && challengerId) {
+        document.getElementById("challenger_id").value = challengerId;
+        await getChallenger();
+      }
+    } catch (e) {
+      resultEl.className = "err";
+      resultEl.textContent = "Connexion impossible.\n" + e.message;
+    }
+  }
+
+  function resetCombat() {
+    const champs = [
+      "combat_julien_check", "combat_julien_id",
+      "combat_leo_check", "combat_leo_id",
+      "combat_challenger_check", "combat_challenger_id"
+    ];
+    champs.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (el.type === "checkbox") {
+        el.checked = false;
+      } else {
+        el.value = "";
+      }
+      localStorage.removeItem(id);
+    });
+
+    const resultEl = document.getElementById("combat_result");
+    resultEl.className = "";
+    resultEl.textContent = "En attente...";
+  }
+
+  /* ---------- HISTORIQUE ---------- */
+
+  function spriteDuType(type) {
+    if (type === "Julien") return "🗡️";
+    if (type === "Leo") return "😎";
+    if (type === "Challenger") return "🥊";
+    return "•";
+  }
+
+  function ajouterHistorique(type, id, nom) {
+    let historique = [];
+    try {
+      historique = JSON.parse(localStorage.getItem("combatHistory")) || [];
+    } catch (e) {
+      historique = [];
+    }
+
+    historique.push({
+      type: type,
+      id: id,
+      nom: nom,
+      date: new Date().toLocaleString("fr-FR")
+    });
+
+    localStorage.setItem("combatHistory", JSON.stringify(historique));
+    afficherHistorique();
+  }
+
+  function afficherHistorique() {
+    const el = document.getElementById("historyList");
+    let historique = [];
+    try {
+      historique = JSON.parse(localStorage.getItem("combatHistory")) || [];
+    } catch (e) {
+      historique = [];
+    }
+
+    if (historique.length === 0) {
+      el.innerHTML = "<p class='muted'>Aucun personnage créé pour l'instant.</p>";
+      return;
+    }
+
+    let html = "";
+    for (let i = historique.length - 1; i >= 0; i--) {
+      const entree = historique[i];
+      const nomAffiche = entree.nom ? " \"" + entree.nom + "\"" : "";
+      html += "<div class='history-item'>";
+      html += "<span>" + spriteDuType(entree.type) + " " + entree.type + nomAffiche + " — id " + entree.id + "</span>";
+      html += "<span class='history-date'>" + entree.date + "</span>";
+      html += "</div>";
+    }
+    el.innerHTML = html;
+  }
+
+  function demanderEffacerHistorique() {
+    document.getElementById("confirmModal").classList.remove("hidden");
+  }
+
+  function confirmerEffacerHistorique(oui) {
+    if (oui) {
+      localStorage.removeItem("combatHistory");
+      afficherHistorique();
+    }
+    document.getElementById("confirmModal").classList.add("hidden");
+  }
+
+  /* ---------- SAUVEGARDE AUTOMATIQUE DES CHAMPS ---------- */
+
+  function saveField(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (el.type === "checkbox") {
+      localStorage.setItem(id, el.checked);
+    } else {
+      localStorage.setItem(id, el.value);
+    }
+  }
+
+  function loadField(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const valeur = localStorage.getItem(id);
+    if (valeur === null) return;
+    if (el.type === "checkbox") {
+      el.checked = (valeur === "true");
+    } else {
+      el.value = valeur;
+    }
+  }
+
+  window.onload = function() {
+    // Julien
+    loadField("create_julien_taille");
+    loadField("create_julien_swag");
+    loadField("create_julien_action");
+    loadField("create_julien_pv");
+    loadField("julien_id");
+    loadField("update_julien_taille");
+    loadField("update_julien_swag");
+    loadField("update_julien_action");
+    loadField("update_julien_pv");
+
+    // Leo
+    loadField("create_leo_taille");
+    loadField("create_leo_swag");
+    loadField("create_leo_beau");
+    loadField("create_leo_phrase");
+    loadField("create_leo_action");
+    loadField("create_leo_pv");
+    loadField("leo_id");
+    loadField("update_leo_taille");
+    loadField("update_leo_swag");
+    loadField("update_leo_beau");
+    loadField("update_leo_phrase");
+    loadField("update_leo_action");
+    loadField("update_leo_pv");
+
+    // Challenger
+    loadField("create_challenger_nom");
+    loadField("create_challenger_taille");
+    loadField("create_challenger_swag");
+    loadField("create_challenger_action");
+    loadField("create_challenger_pv");
+    loadField("challenger_id");
+    loadField("update_challenger_nom");
+    loadField("update_challenger_taille");
+    loadField("update_challenger_swag");
+    loadField("update_challenger_action");
+    loadField("update_challenger_pv");
+
+    // Combat
+    loadField("combat_julien_check");
+    loadField("combat_julien_id");
+    loadField("combat_leo_check");
+    loadField("combat_leo_id");
+    loadField("combat_challenger_check");
+    loadField("combat_challenger_id");
+
+    afficherHistorique();
+  };
+
+</script>
+</body>
+</html>
